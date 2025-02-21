@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Task } from './models';
 
 @Component({
   selector: 'app-task',
@@ -42,7 +43,7 @@ export class TaskComponent implements OnInit{
   }
 
   protected processForm(): void{
-    const values: any = this.form.value
+    const values: Task = this.form.value
     console.info('>>>>> form: ', values)
   }
 
