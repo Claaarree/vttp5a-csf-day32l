@@ -1,0 +1,98 @@
+<p>task works!</p>
+
+<h1>TODO TASK</h1>
+
+<form [formGroup]="form" (submit)="processForm()">
+    <ul>
+    <li>Form valid: {{form.valid}}</li>
+    <li>Form invalid: {{form.invalid}}</li>
+    <li>taskName invalid: {{form.get('taskName')?.invalid}}</li>
+    <li>taskName valid: {{form.get('taskName')?.valid}}</li>
+    </ul>
+
+
+    <table>
+        <tr>
+            <td>Task Name:</td>
+            <td>
+                <input type="text" formControlName="taskName" 
+                [ngClass]="{'valid': form.get('taskName')?.valid, 'invalid': form.get('taskName')?.invalid}"
+                >
+                    
+            </td>
+        </tr>
+        <tr>
+            <td>Priority:</td>
+            <td>
+                <select formControlName="priority">
+                    <option value="0">Low</option>
+                    <option value="1">Medium</option>
+                    <option value="2">High</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Due Date:</td>
+            <td>
+                <input type="date" formControlName="dueDate">
+            </td>
+        </tr>
+        <tr>
+            <td>Urgency</td>
+            <td>
+                <input type="range" min="1" max="5" formControlName="urgency" (change)="updateUrgency($event)">{{urgency}}
+            </td>
+        </tr>
+        <tr>
+            <td>Comments:</td>
+            <td>
+                <textarea rows="4" cols="30" formControlName="comments"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>Procrastinate:</td>
+            <td>
+                <input type="checkbox" formControlName="procrastinate">
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+                <button type="submit" [disabled]="form.invalid">Add</button>
+                <button type="button" (click)="addCollaborators()">Add Collaborator</button>
+            </td>
+        </tr>
+    </table>
+    @if(collaborators.controls.length > 0){
+        <h2>Collaborators</h2>
+    
+        <table>
+            <thead>
+                <tr>
+                    <td>Index</td>
+                    <td>Name</td>
+                    <td>Email</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody formArrayName="collaborators">
+                @for (col of collaborators.controls; let idx = $index; track col) {
+                    <tr [formGroupName]="idx">
+                        <td>{{idx + 1}}</td>
+                        <td>
+                            <input type="text" formControlName="name">
+                        </td>
+                        <td>
+                            <input type="text" formControlName="email">
+                        </td>
+                        <td>
+                            <button (click)="removeCollaborator(idx)">X</button>
+                        </td>
+                    </tr>
+                } 
+            </tbody>
+        </table>
+    }   @else {
+            <h3>Get Help!</h3>
+        }
+</form>

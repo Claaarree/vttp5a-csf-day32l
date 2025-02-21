@@ -1,0 +1,11 @@
+.valid {
+    border: 1px green solid;
+    padding: 1px;
+    border-radius: 4px;
+}
+
+.invalid {
+    border: 1px red solid;
+    padding: 1px;
+    border-radius: 4px;
+}
